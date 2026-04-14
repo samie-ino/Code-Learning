@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+import threading
 
 
 # TIC TAC TOE GAME
@@ -37,7 +38,7 @@ def check_empty(spot):
 
 
 
-game = True
+
 round = False
 
 
@@ -83,7 +84,10 @@ def check_winner():
     else:
         return False
 
-game_list = [" "," ", " ", " ", " ", " ", " ", " ", " "]
+
+
+
+'''
 def board():
     # print(game_list[3])
     print(game_list[0],"|",game_list[1],"|",game_list[2])
@@ -93,6 +97,8 @@ def board():
     print(game_list[6],"|",game_list[7],"|",game_list[8])
     print("           ")
    # print(game_list)
+'''
+
 
 def gui():
     num = 0
@@ -100,19 +106,21 @@ def gui():
         for colj in range(3):
             num += 1
             # add a button & size
-            button = Button(root, text = num, height = 5, width = 10)
+            button = Button(root, text = " ", height = 5, width = 10)
             # grid
             button.grid(row = rowi, column = colj)
-            print(f"The value of the column is {colj}")
-            print(f"The value of the row is {rowi}")
+            #print(f"The value of the column is {colj}")
+            #print(f"The value of the row is {rowi}")
 
 
-
+game_list = [" "," ", " ", " ", " ", " ", " ", " ", " "]
 
 user_play = input("Would you like to play tic-tac-toe?").lower()
 
 
 def loopy():
+
+    game = True
 
     while game:
         if user_play == "yes":
@@ -143,6 +151,7 @@ def loopy():
          # print(winner)
     # if we have winner
         if winner == True:
+             gui()
              game = False
              print("The game has winner")
         else:
@@ -157,10 +166,12 @@ def loopy():
                 # print(random_number)
                 if game_list[random_number - 1] == " ":
                     game_list[random_number - 1] = "O"
-                    board()
+                    #board()
+                    gui()
                     winner2 = check_winner()
                    # print(winner2)
                     if  winner2 == True:
+                        gui()
                         print("We have a winner")
                         game = False
                     else:
@@ -180,12 +191,13 @@ def loopy():
                         if game_list[random_number - 1] == " ":
                             game_list[random_number - 1] = "O"
                             round = False
-                            board()
+                            gui()
                             # if there is a winner
                             winner3 = check_winner()
                             print(winner3)
                             if winner3 == True:
                                 print("We have a winner")
+                                gui()
                                 game = False
                             else:
                                 draw3 = check_draw()
@@ -198,6 +210,9 @@ def loopy():
                             print("It's not a empty spot Mr Computer")
 
 
+thready = threading.Thread(target=loopy)
+thready.deamon = True
+thready.start()
 
 
 

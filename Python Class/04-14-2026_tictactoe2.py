@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+import threading
 
 
 # TIC TAC TOE GAME
@@ -37,7 +38,7 @@ def check_empty(spot):
 
 
 
-game = True
+
 round = False
 
 
@@ -113,6 +114,8 @@ user_play = input("Would you like to play tic-tac-toe?").lower()
 
 
 def loopy():
+
+    game = True
 
     while game:
         if user_play == "yes":
@@ -198,6 +201,9 @@ def loopy():
                             print("It's not a empty spot Mr Computer")
 
 
+thready = threading.Thread(target=loopy)
+thready.deamon = True
+thready.start()
 
 
 
